@@ -1,15 +1,6 @@
 <template>
     <div>
-        <v-layout
-            column
-            justify-center
-            align-center
-            class="mb-10 mt-5"
-        >
-            <v-flex>
-                <h1 ma5> {{ texts.title }} </h1>
-            </v-flex>
-        </v-layout>
+        <component-title :title="texts.title" />
 
         <v-parallax
             height="600"
@@ -41,26 +32,10 @@
             </v-layout>
         </v-parallax>
 
-        <v-layout
-            column
-            justify-center
-            align-center
-            class="mb-10 mt-3"
-        >
-            <v-flex>
-                <v-card 
-                    class="pa-10 mx-auto"
-                    width="5000"
-                >
-                    <h3 class="display-1 text--primary">
-                        {{ texts.aboutUsTitle }}
-                    </h3>
-                    <p class="text--primary mt-3">
-                        {{ texts.aboutUsContent }}
-                    </p>
-                </v-card>
-            </v-flex>
-        </v-layout>
+        <fullwide-card
+            :title="texts.aboutUsTitle"
+            :content="texts.aboutUsContent"
+        />
 
     </div>
 </template>
@@ -68,11 +43,18 @@
 <script>
 import texts from '~/assets/texts/about-us.json'
 
+import FullwideCard from '~/components/molecules/FullwideCard.vue'
+import ComponentTitle from '~/components/molecules/ComponentTitle.vue'
+
 export default {
     data() {
         return {
             texts
         }
+    }, 
+    components: {
+        FullwideCard,
+        ComponentTitle,
     }
 }
 </script>
