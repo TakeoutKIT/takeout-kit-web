@@ -63,7 +63,7 @@ export default {
           {
             title: 'TakeoutKITとは',
             icon: 'fas fa-question-circle',
-            to: 'what-is-this'
+            to: '/about-us'
           }
         ]
       }
