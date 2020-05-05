@@ -1,41 +1,55 @@
-const dotenv = require('dotenv')
-const config = dotenv.config().parsed
+require('dotenv').config()
 const { Router } = require('express')
 const router = Router()
 const { google } = require('googleapis')
 const sheets = google.sheets({
   version: 'v4',
-  auth: config.GSHEET_API_KEY
+  auth: process.env.GSHEET_API_KEY
 })
 
 /* 店一覧を取得 */
 router.get('/shops', async function (req, res, next) {
+  const page = isFinite(req.query.page) ? parseInt(req.query.page) : 1
+  const sort = isFinite(req.query.sort) ? parseInt(req.query.sort) : 1
+  const limit = isFinite(req.query.limit) ? parseInt(req.query.limit) : 20
   /*
   const data = await sheets.spreadsheets.values.get(
     {
-      spreadsheetId: config.GSHEET_ID,
+      spreadsheetId: process.env.GSHEET_ID,
       range: 'A' + (id+1) + ':K' +  (id+1),
     }
   )
   if (!data) {
-    throw new Error('Invalid google response');
+    throw new Error('Invalid google response')
+    res.sendStatus(400)
+    returns
   }
   */
- const page = req.query.page ? parseInt(req.query.page) : 1
- res.json()
+  res.json()
 })
 
 /* 店情報取得 */
 router.get('/shops/:id', async function (req, res, next) {
   const id = parseInt(req.params.id)
+  if (!id){
+    res.sendStatus(400)
+    return
+  } else if (id < 0) {
+    res.sendStatus(400)
+    return
+  }
   const data = await sheets.spreadsheets.values.get(
     {
-      spreadsheetId: config.GSHEET_ID,
+      spreadsheetId: process.env.GSHEET_ID,
       range: 'A' + (id+1) + ':K' +  (id+1),
     }
   )
   if (!data) {
-    throw new Error('Invalid google response');
+    res.sendStatus(500)
+    return
+  } else if (!data.data.values){
+    res.sendStatus(400)
+    return
   }
   const resp = data.data.values.map(d => ({
     id: d[0],
@@ -55,23 +69,22 @@ router.get('/shops/:id', async function (req, res, next) {
 
 /* 店情報追加 */
 router.post('/shops', function (req, res, next) {
-  if (req.params.key != config.AUTHORIZATION_KEY){
+  if (req.params.key != process.env.AUTHORIZATION_KEY) {
     res.sendStatus(401)
+    return
   }
-  res.json(users)
+  res.sendStatus(501)
+  return
 })
 
 /* 店情報編集 */
 router.put('/shops/:id', function (req, res, next) {
-  if (req.params.key != config.AUTHORIZATION_KEY){
+  if (req.params.key != process.env.AUTHORIZATION_KEY) {
     res.sendStatus(401)
+    return
   }
-  const id = parseInt(req.params.id)
-  if (id >= 0 && id < users.length) {
-    res.json(users[id])
-  } else {
-    res.sendStatus(404)
-  }
+  res.sendStatus(501)
+  return
 })
 
 module.exports = router
