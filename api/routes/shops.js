@@ -6,10 +6,12 @@ const sheets = google.sheets({
   version: 'v4',
   auth: process.env.GSHEET_API_KEY
 })
+/*
 const places = google.places({
   version: 'v4',
   auth: process.env.GPLACE_API_KEY
 })
+*/
 
 /* APIの使用方法ページを返すなりなんなり*/
 router.get('/', async function (req, res, next) {
