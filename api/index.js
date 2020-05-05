@@ -1,15 +1,9 @@
 const express = require('express')
 
-// Create express instance
 const app = express()
+const shops = require('./routes/shops')
+app.use(shops)
 
-// Require API routes
-const users = require('./routes/users')
-
-// Import API Routes
-app.use(users)
-
-// Export the server middleware
 module.exports = {
   path: '/api',
   handler: app
