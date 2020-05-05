@@ -88,3 +88,5 @@ sw.*
 
 # Vim swap files
 *.swp
+default.code-workspace
+.vscode/launch.json
