@@ -73,7 +73,7 @@ router.get('/shops/:id', async function (req, res, next) {
   const data = await sheets.spreadsheets.values.get(
     {
       spreadsheetId: process.env.GSHEET_ID,
-      range: 'A' + (id+1) + ':K' +  (id+1),
+      range: '情報!A' + (id+1) + ':K' +  (id+1),
     }
   )
   if (!data) {
@@ -86,15 +86,20 @@ router.get('/shops/:id', async function (req, res, next) {
   const resp = data.data.values.map(d => ({
     id: d[0],
     name: d[1],
-    tag: d[2].split(','),
-    takeout: ( d[3] == 'TRUE' ),
-    firstDelivery: ( d[4] == 'TRUE' ),
-    thirdDelivery: ( d[5] == 'TRUE' ),
-    orderUrl: d[6],
-    siteurl: d[7],
-    imageUrl: d[8],
-    mapUrl: d[9],
-    extraInfo: d[10]
+    address: d[2],
+    latitude: d[3],
+    longtude: d[4],
+    tel: d[5],
+    rating: d[6],
+    tag: d[7].split(','),
+    takeout: ( d[8] == 'TRUE' ),
+    firstDelivery: ( d[9] == 'TRUE' ),
+    thirdDelivery: ( d[10] == 'TRUE' ),
+    orderUrl: d[11],
+    siteurl: d[12],
+    imageUrl: d[13],
+    mapUrl: d[14],
+    extraInfo: d[15]
   }))[0]
   res.json(resp)
 })
