@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import texts from '~/assets/texts/default.json'
+
 export default {
   data () {
     return {
@@ -51,17 +53,17 @@ export default {
         isDrawer: false,
         items: [
           { 
-            title: '一覧', 
+            title: texts.title, 
             icon: 'fas fa-list',
             to: '/'
           },
           {
-            title: '投稿・訂正',
+            title: texts.cooperate,
             icon: 'fas fa-edit',
             to: '/cooperate'
           },
           {
-            title: 'TakeoutKITとは',
+            title: texts.aboutus,
             icon: 'fas fa-question-circle',
             to: '/about-us'
           }
