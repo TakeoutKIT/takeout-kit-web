@@ -22,8 +22,11 @@
             </v-img>
         </v-row>
 
-
-        <div v-if="!!shopNews" v-html="$md.render(shopNews.news)"></div>
+        <v-card class="pl-5 pr-5 pt-3 mt-10 ms-2">
+            <v-card-text>
+                <p v-if="!!shopNews" v-html="$md.render(shopNews.news)"></p>
+            </v-card-text>
+        </v-card>
 
         <v-row v-if="!!iframeToUrl()" align="center" class="pl-5 pr-5 mt-10" justify="center">
             <iframe 
@@ -69,7 +72,7 @@ export default {
             } catch(e) {
                 return ''
             }
-        }   
+        } 
     }
 }
 </script>
