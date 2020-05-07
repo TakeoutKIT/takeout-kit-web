@@ -1,3 +1,4 @@
+require('dotenv').config()
 import colors from 'vuetify/es5/util/colors'
 
 export default {
@@ -84,6 +85,8 @@ export default {
     '~/api/index.js'
   ],
   axios: {
-    baseURL: process.env.baseUrl
+    baseURL: 'http://localhost:3000/api/',
+    browserBaseURL: process.env.API_ENDPOINT,
+    proxyHeaders: true
   },
 }
