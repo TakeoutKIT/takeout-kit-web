@@ -12,6 +12,26 @@
             </v-chip>
         </div>
 
+        <v-row class="mt-2" align="center" justify="center">
+            <v-checkbox
+                v-model="shopData.takeout"
+                label="テイクアウト"
+                :readonly="true"
+            ></v-checkbox>
+            <div style="width:2%;height:100%;"></div>
+            <v-checkbox
+                v-model="shopData.firstDelivery"
+                label="自社デリバリー"
+                :readonly="true"
+            ></v-checkbox>
+            <div style="width:2%;height:100%;"></div>
+            <v-checkbox
+                v-model="shopData.thirdDelivery"
+                label="外部委託デリバリー"
+                :readonly="true"
+            ></v-checkbox>
+        </v-row>
+
         <v-row v-if="!!shopData.imageUrl" align="center" class="pl-5 pr-5 mt-10" justify="center">
             <v-img
                 :class="[$style.embed_frame, 'grey', 'lighten-2']" 
