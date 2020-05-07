@@ -142,17 +142,17 @@ router.get('/shops', async function (req, res, next) {
     address: d[2],
     latitude: d[3],
     longitude: d[4],
-    tel: d[5],
+    tel: d[5] != 'なし' ? d[5] : '',
     rating: d[6],
     tag: d[7].split(','),
     takeout: ( d[8] == 'TRUE' ),
     firstDelivery: ( d[9] == 'TRUE' ),
     thirdDelivery: ( d[10] == 'TRUE' ),
-    orderUrl: d[11],
-    siteUrl: d[12],
-    imageUrl: d[13],
-    mapIframe: d[14],
-    extraInfo: d[15],
+    orderUrl: d[11] != 'なし' ? d[11] : '',
+    siteUrl: d[12] != 'なし' ? d[12] : '',
+    imageUrl: d[13] != 'なし' ? d[13] : '',
+    mapIframe: d[14] != 'なし' ? d[14] : '',
+    extraInfo: d[15] != 'なし' ? d[15] : '',
     distance: longitude && latitude ? d[16] : null
   }))
   // 応答作成
