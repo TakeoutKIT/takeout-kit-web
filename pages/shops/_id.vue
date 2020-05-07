@@ -13,7 +13,7 @@
             </v-img> -->
             <iframe 
                 :class="$style.map_embed" 
-                :src="`https://maps.google.co.jp/maps?t=m&output=embed&q=${shopData.name}`" 
+                :src="`${shopData.mapUrl}`" 
                 scrolling="no"
             ></iframe>
         </v-row>
