@@ -6,12 +6,25 @@ const sheets = google.sheets({
   version: 'v4',
   auth: process.env.GSHEET_API_KEY
 })
+
 /*
-const places = google.places({
-  version: 'v4',
-  auth: process.env.GPLACE_API_KEY
-})
+Copied from stackoverflow
+ Source: https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula
+ Writer: https://stackoverflow.com/users/1921/chuck
 */
+function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+  let R = 6371; // Radius of the earth in km
+  let dLat = deg2rad(lat2-lat1);  // deg2rad below
+  let dLon = deg2rad(lon2-lon1)
+  let a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2)
+  let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+  let d = R * c
+  return d
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
+}
 
 /* APIの使用方法ページを返すなりなんなり*/
 router.get('/', async function (req, res, next) {
@@ -26,8 +39,12 @@ router.get('/shops', async function (req, res, next) {
   const limit = isFinite(req.query.limit) ? parseInt(req.query.limit) : 20
   // タグ検索(デフォルトなし)
   const keyword = req.query.keyword ? req.query.keyword : ''
-  // ソート方法 (0: 登録順 1:店舗名前順 2:レビュー人気度)
+  // ソート方法 (0: 登録順 1:店舗名前順 2:レビュー人気度 3:位置情報順)
   const sort = isFinite(req.query.sort) ? parseInt(req.query.sort) : 2
+  // 位置情報
+  const longitude = req.query.longitude ? req.query.longitude : null
+  const latitude = req.query.latitude ? req.query.latitude : null
+  const shopRange = isFinite(req.query.range) ? req.query.range : 10
   // ソート方向 (0: 降順 1:昇順)
   const direction = isFinite(req.query.direction) ? parseInt(req.query.direction) : 1
   // 絞り込み (0:絞り込まない 1:絞り込む)
@@ -50,18 +67,32 @@ router.get('/shops', async function (req, res, next) {
   }
   // データ一覧を出す
   let shops = data.data.values
-  // タグ検索処理 (OR検索)
+  // タグ検索 (OR検索)
   if (keyword) {
     keyword.split(',').forEach( (k) => {
       shops = shops.filter(shop => shop[7].includes(k))
     })
   }
-  // 絞り込み処理
+  // テイクアウト絞り込み
   [filterDelivery,filterthirdDelivery,filterTakeout].forEach( (value,index) => {
     if (value != 0) {
       shops = shops.filter(shop => shop[8+index] == 'TRUE')
     }
   })
+  // 距離絞り込み
+  if (longitude && latitude){
+    let newShops = []
+    shops.forEach( (shop, index) => {
+        console.log(shop.length)
+        socialDistance = getDistanceFromLatLonInKm(latitude, longitude, shop[3], shop[4])
+        if (socialDistance < shopRange){
+          shop.push(socialDistance)
+          newShops.push(shop)
+        }
+      }
+    )
+    shops = newShops
+  }
   // ソート方法
   let sortKeyNum = 0
   switch(sort){
@@ -75,10 +106,19 @@ router.get('/shops', async function (req, res, next) {
     case 2:
       sortKeyNum = 6
       break
+    // 位置情報近い順
+    case 3:
+      // 両方ないと出せないので
+      if (!longitude && !latitude){
+        res.sendStatus(400)
+        return
+      }
+      sortKeyNum = 16
+      break
     default:
       break
   }
-  // 通常ソート(位置情報近い順はまだ)
+  // ソート
   if (direction == 0){
     shops.sort( (a, b) => {
       return a[sortKeyNum] - b[sortKeyNum]
@@ -97,12 +137,13 @@ router.get('/shops', async function (req, res, next) {
     shops = shops.slice(0, page*limit)
   }
   // 整形
+  console.log(shops)
   shops = shops.map(d => ({
     id: d[0],
     name: d[1],
     address: d[2],
     latitude: d[3],
-    longtude: d[4],
+    longitude: d[4],
     tel: d[5],
     rating: d[6],
     tag: d[7].split(','),
@@ -113,7 +154,8 @@ router.get('/shops', async function (req, res, next) {
     siteUrl: d[12],
     imageUrl: d[13],
     mapIframe: d[14],
-    extraInfo: d[15]
+    extraInfo: d[15],
+    distance: longitude && latitude ? d[16] : null
   }))
   // 応答作成
   const resp = {
@@ -128,6 +170,9 @@ router.get('/shops', async function (req, res, next) {
 /* 店情報取得 */
 router.get('/shops/:id', async function (req, res, next) {
   const id = parseInt(req.params.id)
+  // 位置情報
+  const longitude = req.query.longitude ? req.query.longitude : null
+  const latitude = req.query.latitude ? req.query.latitude : null
   if (!id){
     res.sendStatus(400)
     return
@@ -153,7 +198,7 @@ router.get('/shops/:id', async function (req, res, next) {
     name: d[1],
     address: d[2],
     latitude: d[3],
-    longtude: d[4],
+    longitude: d[4],
     tel: d[5],
     rating: d[6],
     tag: d[7].split(','),
@@ -164,29 +209,10 @@ router.get('/shops/:id', async function (req, res, next) {
     siteUrl: d[12],
     imageUrl: d[13],
     mapIframe: d[14],
-    extraInfo: d[15]
+    extraInfo: d[15],
+    distance: longitude && latitude ? getDistanceFromLatLonInKm(latitude, longitude, d[3], d[4]) : null
   }))[0]
   res.json(resp)
-})
-
-/* 店情報追加 */
-router.post('/shops', function (req, res, next) {
-  if (req.params.key != process.env.AUTHORIZATION_KEY) {
-    res.sendStatus(401)
-    return
-  }
-  res.sendStatus(501)
-  return
-})
-
-/* 店情報編集 */
-router.put('/shops/:id', function (req, res, next) {
-  if (req.params.key != process.env.AUTHORIZATION_KEY) {
-    res.sendStatus(401)
-    return
-  }
-  res.sendStatus(501)
-  return
 })
 
 module.exports = router
