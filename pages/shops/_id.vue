@@ -1,7 +1,6 @@
 <template>
     <div>
         <component-title :title="shopData.name" />
-        {{ shopNews }}
         <div class="text-center">
             <v-chip
                 v-for="(tag, i) in shopData.tag"
@@ -12,6 +11,7 @@
                 {{ tag }}
             </v-chip>
         </div>
+
         <v-row v-if="!!shopData.imageUrl" align="center" class="pl-5 pr-5 mt-10" justify="center">
             <v-img
                 :class="[$style.embed_frame, 'grey', 'lighten-2']" 
@@ -21,6 +21,10 @@
             >
             </v-img>
         </v-row>
+
+
+        <div v-if="!!shopNews" v-html="$md.render(shopNews.news)"></div>
+
         <v-row v-if="!!iframeToUrl()" align="center" class="pl-5 pr-5 mt-10" justify="center">
             <iframe 
                 :class="$style.embed_frame" 
