@@ -60,13 +60,13 @@ export default {
                     id: 'tab-1',
                     title: '店舗登録',
                     icon: 'fas fa-plus-square',
-                    content: '<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd5PMhlcWUXAp9WmpqNGH1t2Mc8XxrPNNx7EoPKui-MOOy1aA/viewform?embedded=true" style="width:80vw;" height="1740" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>'
+                    content: '<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd5PMhlcWUXAp9WmpqNGH1t2Mc8XxrPNNx7EoPKui-MOOy1aA/viewform?embedded=true" height="1740" frameborder="0" marginheight="0" marginwidth="0" style="width:80vw;">読み込んでいます…</iframe>'
                 },
                 {
                     id: 'tab-2',
                     title: '追記・編集・削除',
                     icon: 'fas fa-pen-square',
-                    content: '<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeJ5r2XD2_3DdT38kATZe3-KvhRFOWjzkYyWJfYVyW9MtDXUg/viewform?embedded=true" style="width:80vw;" height="920" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>'
+                    content: '<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeJ5r2XD2_3DdT38kATZe3-KvhRFOWjzkYyWJfYVyW9MtDXUg/viewform?embedded=true" height="920" frameborder="0" marginheight="0" marginwidth="0" style="width:80vw;">読み込んでいます…</iframe>'
                 }
             ],
         }
