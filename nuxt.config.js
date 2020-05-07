@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+require('dotenv').config()
 
 export default {
   mode: 'universal',
@@ -36,6 +37,7 @@ export default {
   ** Nuxt.js dev-modules
   */
   buildModules: [
+    '@nuxtjs/dotenv',
     '@nuxtjs/vuetify',
     '@nuxtjs/google-analytics'
   ],
@@ -83,4 +85,9 @@ export default {
     // API middleware
     '~/api/index.js'
   ],
+  axios: {
+    baseURL: 'http://localhost:3000/api/',
+    browserBaseURL: process.env.API_ENDPOINT,
+    proxyHeaders: true
+  },
 }
