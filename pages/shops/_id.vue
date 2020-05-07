@@ -1,6 +1,7 @@
 <template>
     <div>
         <component-title :title="shopData.name" />
+        {{ shopNews }}
         <div class="text-center">
             <v-chip
                 v-for="(tag, i) in shopData.tag"
@@ -33,8 +34,19 @@
 
 <script>
 import ComponentTitle from '~/components/molecules/ComponentTitle.vue'
+import shopsNews from '~/apollo/queries/shopsNews'
 
 export default {
+    apollo: {
+        shopNews: {
+            query: shopsNews,
+            variables() {
+                return {
+                    id: this.$route.params.id
+                }
+            }
+        }
+    },
     validate(context) {
         return /^[0-9]+$/.test(context.params.id)
     },

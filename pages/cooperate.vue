@@ -1,7 +1,6 @@
 <template>
     <div>
         <component-title :title="texts.title" :subtitle="texts.comment" />
-
         <div>
             <v-tabs
                 v-model="tabState"

@@ -1,0 +1,8 @@
+query allShopsNews {
+  shopsNews {
+    id, 
+    shopId, 
+    news,
+    createdAt
+  }
+}

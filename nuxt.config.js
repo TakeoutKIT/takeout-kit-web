@@ -48,6 +48,7 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/apollo',
     '@nuxtjs/axios',
   ],
   /*
@@ -89,5 +90,10 @@ export default {
     baseURL: process.env.NODE_ENV !== 'production' ? 'http://localhost:3000/api/' : 'http://localhost:' + process.env.PORT + '/api/',
     browserBaseURL: process.env.API_ENDPOINT,
     proxyHeaders: true
+  },
+  apollo: {
+    clientConfigs: {
+      default: '~/apollo/client-configs/default.js'
+    }
   },
 }
