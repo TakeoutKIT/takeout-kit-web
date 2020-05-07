@@ -73,7 +73,7 @@ router.get('/shops/:id', async function (req, res, next) {
   const data = await sheets.spreadsheets.values.get(
     {
       spreadsheetId: process.env.GSHEET_ID,
-      range: '情報!A' + (id+1) + ':K' +  (id+1),
+      range: 'A' + (id+1) + ':P' +  (id+1),
     }
   )
   if (!data) {
