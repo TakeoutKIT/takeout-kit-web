@@ -5,13 +5,14 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 
 export default {
+    validate(context) {
+        return /^[0-9]+$/.test(context.params.id)
+    },
     async asyncData(context) {
-        //const id = context.params.id
-        //const shopData = (await axiosBase.get(`/api/shops/${id}`)).data
+        const id = context.params.id
+        const shopData = (await context.$axios.$get(`/api/shops/${id}`)).data
         return { shopData: 'TODO:ここから' }
     }
 }
