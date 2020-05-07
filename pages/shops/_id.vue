@@ -1,19 +1,29 @@
 <template>
     <div>
         <component-title :title="shopData.name" />
-        <v-row align="center" class="pl-5 pr-5" justify="center">
-            <!-- <v-img
-                src="https://bad.src/not/valid"
-                lazy-src="https://picsum.photos/id/11/100/60"
-                aspect-ratio="1"
-                class="grey lighten-2"
-                max-width="800"
-                max-height="400"
+        <div class="text-center">
+            <v-chip
+                v-for="(tag, i) in shopData.tag"
+                :key="i"
+                class="ma-1"
+                label
             >
-            </v-img> -->
+                {{ tag }}
+            </v-chip>
+        </div>
+        <v-row v-if="!!shopData.imageUrl" align="center" class="pl-5 pr-5 mt-10" justify="center">
+            <v-img
+                :class="[$style.embed_frame, 'grey', 'lighten-2']" 
+                :src="shopData.imageUrl"
+                :lazy-src="require('~/assets/images/loading.gif')"
+                aspect-ratio="1"
+            >
+            </v-img>
+        </v-row>
+        <v-row v-if="!!iframeToUrl()" align="center" class="pl-5 pr-5 mt-10" justify="center">
             <iframe 
-                :class="$style.map_embed" 
-                :src="`${shopData.mapUrl}`" 
+                :class="$style.embed_frame" 
+                :src="iframeToUrl()" 
                 scrolling="no"
             ></iframe>
         </v-row>
@@ -35,12 +45,21 @@ export default {
     },
     components: {
         ComponentTitle
+    },
+    methods: {
+        iframeToUrl() {
+            try {
+                return this.shopData.mapIframe.split('"')[1]
+            } catch(e) {
+                return ''
+            }
+        }   
     }
 }
 </script>
 
 <style lang="scss" module>
-.map_embed {
+.embed_frame {
     width: 100%;
     height: 60vh;
 }

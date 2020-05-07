@@ -48,12 +48,12 @@ import texts from '~/assets/texts/default.json'
 export default {
   data () {
     return {
-      title: 'TakeoutKIT(非公式)',
+      title: texts.title,
       naviDrawer: {
         isDrawer: false,
         items: [
           { 
-            title: texts.title, 
+            title: texts.list, 
             icon: 'fas fa-list',
             to: '/'
           },
