@@ -22,9 +22,9 @@
             </v-img>
         </v-row>
 
-        <v-card class="pl-5 pr-5 pt-3 mt-10 ms-2">
+        <v-card v-if="!!shopNews" class="pl-5 pr-5 pt-3 mt-10 ms-2">
             <v-card-text>
-                <p v-if="!!shopNews" v-html="$md.render(shopNews.news)"></p>
+                <p v-html="$md.render(shopNews.news)"></p>
             </v-card-text>
         </v-card>
 
