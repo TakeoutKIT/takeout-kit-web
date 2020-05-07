@@ -38,24 +38,14 @@ router.get('/shops', async function (req, res, next) {
   const data = await sheets.spreadsheets.values.get(
     {
       spreadsheetId: process.env.GSHEET_ID,
-      range: 'A1:K'
+      range: 'A1:P'
     }
   )
   if (!data) {
     res.sendStatus(500)
     return
   }
-  // ショップデータをGSHEETから一括取得(Googleから取ると金かかる)
-  const shops = await sheets.spreadsheets.values.get(
-    {
-      spreadsheetId: process.env.GSHEET_ID,
-      range: 'A1:K'
-    }
-  )
-  if (!data) {
-    res.sendStatus(500)
-    return
-  }
+  // const shops = data.slice((page-1)*limit, page*limit)
   res.sendStatus(501)
   return
 })
@@ -96,9 +86,9 @@ router.get('/shops/:id', async function (req, res, next) {
     firstDelivery: ( d[9] == 'TRUE' ),
     thirdDelivery: ( d[10] == 'TRUE' ),
     orderUrl: d[11],
-    siteurl: d[12],
+    siteUrl: d[12],
     imageUrl: d[13],
-    mapUrl: d[14],
+    mapIframe: d[14],
     extraInfo: d[15]
   }))[0]
   res.json(resp)
