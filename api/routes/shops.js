@@ -83,7 +83,6 @@ router.get('/shops', async function (req, res, next) {
   if (longitude && latitude){
     let newShops = []
     shops.forEach( (shop, index) => {
-        console.log(shop.length)
         socialDistance = getDistanceFromLatLonInKm(latitude, longitude, shop[3], shop[4])
         if (socialDistance < shopRange){
           shop.push(socialDistance)
