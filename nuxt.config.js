@@ -83,7 +83,4 @@ export default {
     // API middleware
     '~/api/index.js'
   ],
-  axios: {
-    baseURL: process.env.baseUrl
-  },
 }

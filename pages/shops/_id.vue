@@ -12,7 +12,7 @@ export default {
     },
     async asyncData(context) {
         const id = context.params.id
-        const shopData = (await context.$axios.$get(`/api/shops/${id}`)).data
+        const shopData = (await context.$axios.get(`https://takeout-kit-web.herokuapp.com/api/shops/${id}`)).data
         return { shopData: 'TODO:ここから' }
     }
 }
