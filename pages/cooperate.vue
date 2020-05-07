@@ -1,7 +1,6 @@
 <template>
     <div>
         <component-title :title="texts.title" :subtitle="texts.comment" />
-
         <div>
             <v-tabs
                 v-model="tabState"
@@ -32,7 +31,7 @@
                             justify-center
                             align-center
                         >
-                            <div v-html="item.content"></div>
+                            <div :class="$style.embed_from" v-html="item.content"></div>
                         </v-layout>
                     </v-card>
                 </v-tab-item>
@@ -60,13 +59,13 @@ export default {
                     id: 'tab-1',
                     title: '店舗登録',
                     icon: 'fas fa-plus-square',
-                    content: '<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd5PMhlcWUXAp9WmpqNGH1t2Mc8XxrPNNx7EoPKui-MOOy1aA/viewform?embedded=true" height="1740" frameborder="0" marginheight="0" marginwidth="0" style="width:80vw;">読み込んでいます…</iframe>'
+                    content: '<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSd5PMhlcWUXAp9WmpqNGH1t2Mc8XxrPNNx7EoPKui-MOOy1aA/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0" style="width:80vw;height:2400px;">読み込んでいます…</iframe>'
                 },
                 {
                     id: 'tab-2',
                     title: '追記・編集・削除',
                     icon: 'fas fa-pen-square',
-                    content: '<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeJ5r2XD2_3DdT38kATZe3-KvhRFOWjzkYyWJfYVyW9MtDXUg/viewform?embedded=true" height="920" frameborder="0" marginheight="0" marginwidth="0" style="width:80vw;">読み込んでいます…</iframe>'
+                    content: '<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeJ5r2XD2_3DdT38kATZe3-KvhRFOWjzkYyWJfYVyW9MtDXUg/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0" style="width:80vw;height:1800px;">読み込んでいます…</iframe>'
                 }
             ],
         }
@@ -74,6 +73,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" module>
+.embed_from {
+    height: 2500px;
+}
 </style>

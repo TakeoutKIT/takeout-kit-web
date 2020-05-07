@@ -1,0 +1,8 @@
+query ShopNews($id: Int!) {
+    shopNews(where: {shopId: $id}) {
+        id, 
+        shopId, 
+        news,
+        createdAt
+    }
+}
