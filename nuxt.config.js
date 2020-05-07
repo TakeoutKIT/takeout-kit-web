@@ -48,6 +48,7 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/markdownit',
     '@nuxtjs/apollo',
     '@nuxtjs/axios',
   ],
@@ -96,4 +97,11 @@ export default {
       default: '~/apollo/client-configs/default.js'
     }
   },
+  markdownit: {
+    injected: true,
+    breaks: true,
+    html: true,
+    linkify: true,
+    typography: true,
+  }
 }

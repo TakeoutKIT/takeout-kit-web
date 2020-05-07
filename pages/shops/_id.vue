@@ -1,7 +1,6 @@
 <template>
     <div>
         <component-title :title="shopData.name" />
-        {{ shopNews }}
         <div class="text-center">
             <v-chip
                 v-for="(tag, i) in shopData.tag"
@@ -12,6 +11,27 @@
                 {{ tag }}
             </v-chip>
         </div>
+
+        <v-row class="mt-2" align="center" justify="center">
+            <v-checkbox
+                v-model="shopData.takeout"
+                label="テイクアウト"
+                :readonly="true"
+            ></v-checkbox>
+            <div style="width:2%;height:100%;"></div>
+            <v-checkbox
+                v-model="shopData.firstDelivery"
+                label="自社デリバリー"
+                :readonly="true"
+            ></v-checkbox>
+            <div style="width:2%;height:100%;"></div>
+            <v-checkbox
+                v-model="shopData.thirdDelivery"
+                label="外部委託デリバリー"
+                :readonly="true"
+            ></v-checkbox>
+        </v-row>
+
         <v-row v-if="!!shopData.imageUrl" align="center" class="pl-5 pr-5 mt-10" justify="center">
             <v-img
                 :class="[$style.embed_frame, 'grey', 'lighten-2']" 
@@ -21,6 +41,13 @@
             >
             </v-img>
         </v-row>
+
+        <v-card v-if="!!shopNews" class="pl-5 pr-5 pt-3 mt-10 ms-2">
+            <v-card-text>
+                <p v-html="$md.render(shopNews.news)"></p>
+            </v-card-text>
+        </v-card>
+
         <v-row v-if="!!iframeToUrl()" align="center" class="pl-5 pr-5 mt-10" justify="center">
             <iframe 
                 :class="$style.embed_frame" 
@@ -65,7 +92,7 @@ export default {
             } catch(e) {
                 return ''
             }
-        }   
+        } 
     }
 }
 </script>
