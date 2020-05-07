@@ -46,6 +46,7 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/axios',
   ],
   /*
   ** vuetify module configuration
@@ -81,5 +82,8 @@ export default {
   serverMiddleware: [
     // API middleware
     '~/api/index.js'
-  ]
+  ],
+  axios: {
+    baseURL: process.env.baseUrl
+  },
 }
