@@ -1,6 +1,5 @@
 require('dotenv').config()
 import colors from 'vuetify/es5/util/colors'
-require('dotenv').config()
 
 export default {
   mode: 'universal',
@@ -49,6 +48,8 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/markdownit',
+    '@nuxtjs/apollo',
     '@nuxtjs/axios',
   ],
   /*
@@ -91,4 +92,16 @@ export default {
     browserBaseURL: process.env.API_ENDPOINT,
     proxyHeaders: true
   },
+  apollo: {
+    clientConfigs: {
+      default: '~/apollo/client-configs/default.js'
+    }
+  },
+  markdownit: {
+    injected: true,
+    breaks: true,
+    html: true,
+    linkify: true,
+    typography: true,
+  }
 }
