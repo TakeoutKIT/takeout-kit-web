@@ -137,7 +137,6 @@ router.get('/shops', async function (req, res, next) {
     shops = shops.slice(0, page*limit)
   }
   // 整形
-  console.log(shops)
   shops = shops.map(d => ({
     id: d[0],
     name: d[1],
