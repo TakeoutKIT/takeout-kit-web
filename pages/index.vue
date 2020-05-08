@@ -83,6 +83,15 @@
 <script>
 
 export default {
+  components: {
+    Logo,
+    VuetifyLogo
+  },
+  head() {
+    return {
+      titleTemplate: 'めしてく'
+    }
+  },
   async asyncData(context) {
     const shops = (await context.$axios.get('/shops')).data
     return {
