@@ -83,10 +83,6 @@
 <script>
 
 export default {
-  components: {
-    Logo,
-    VuetifyLogo
-  },
   head() {
     return {
       titleTemplate: 'めしてく'
@@ -105,23 +101,23 @@ export default {
       location: null,
     }
   },
-  async mounted() {
-    try {
-      let position = await this.getPosition()
-      position = position.coords
-      this.location = {
-        latitude: position.latitude,
-        longitude: position.longitude
-      }
-    } catch(e) {
-      this.location = null
-    }
-  },
   methods: {
     async getPosition(options) {
       return new Promise(function(resolve, reject) {
         navigator.geolocation.getCurrentPosition(resolve, reject, options)
       })
+    },
+    async setLocation() {
+      try {
+        let position = await this.getPosition()
+        position = position.coords
+        this.location = {
+          latitude: position.latitude,
+          longitude: position.longitude
+        }
+      } catch(e) {
+        this.location = null
+      }
     },
     async infiniteLoad() {
       this.$refs.infiniteLoading.stateChanger.complete()
