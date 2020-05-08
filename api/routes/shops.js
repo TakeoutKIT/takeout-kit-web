@@ -32,25 +32,25 @@ router.get('/', async function (req, res, next) {
 })
 
 /* 店一覧を取得 */
-router.get('/shops', async function (req, res, next) {
+router.post('/shops', async function (req, res, next) {
   // 何ページ目か (デフォルト1)
-  const page = isFinite(req.query.page) ? parseInt(req.query.page) : 1
+  const page = isFinite(req.body.page) ? parseInt(req.body.page) : 1
   // 1ページ辺りの表示数 (デフォルト20)
-  const limit = isFinite(req.query.limit) ? parseInt(req.query.limit) : 20
+  const limit = isFinite(req.body.limit) ? parseInt(req.body.limit) : 20
   // タグ検索(デフォルトなし)
-  const keyword = req.query.keyword ? req.query.keyword : ''
+  const keyword = req.body.keyword ? req.body.keyword : ''
   // ソート方法 (0: 登録順 1:店舗名前順 2:レビュー人気度 3:位置情報順)
-  const sort = isFinite(req.query.sort) ? parseInt(req.query.sort) : 2
+  const sort = isFinite(req.body.sort) ? parseInt(req.body.sort) : 2
   // 位置情報
-  const longitude = req.query.longitude ? req.query.longitude : null
-  const latitude = req.query.latitude ? req.query.latitude : null
-  const shopRange = isFinite(req.query.range) ? req.query.range : 10
+  const longitude = req.body.longitude ? req.body.longitude : null
+  const latitude = req.body.latitude ? req.body.latitude : null
+  const shopRange = isFinite(req.body.range) ? req.body.range : 10
   // ソート方向 (0: 降順 1:昇順)
-  const direction = isFinite(req.query.direction) ? parseInt(req.query.direction) : 1
+  const direction = isFinite(req.body.direction) ? parseInt(req.body.direction) : 1
   // 絞り込み (0:絞り込まない 1:絞り込む)
-  const filterDelivery = isFinite(req.query.delivery) ? parseInt(req.query.delivery) : 0
-  const filterthirdDelivery = isFinite(req.query.thirdDelivery) ? parseInt(req.query.thirdDelivery) : 0
-  const filterTakeout = isFinite(req.query.takeout) ? parseInt(req.query.takeout) : 0
+  const filterDelivery = isFinite(req.body.delivery) ? parseInt(req.body.delivery) : 0
+  const filterthirdDelivery = isFinite(req.body.thirdDelivery) ? parseInt(req.body.thirdDelivery) : 0
+  const filterTakeout = isFinite(req.body.takeout) ? parseInt(req.body.takeout) : 0
   // 一覧データをGSHEETから一括取得
   const data = await sheets.spreadsheets.values.get(
     {
