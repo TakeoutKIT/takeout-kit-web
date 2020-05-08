@@ -92,6 +92,11 @@ export default {
   components: {
     Logo,
     VuetifyLogo
+  },
+  head() {
+    return {
+      titleTemplate: 'めしてく'
+    }
   }
 }
 </script>

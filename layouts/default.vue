@@ -1,6 +1,8 @@
 <template>
-  <v-app dark>
+  <v-app>
+    <!-- 左メニュー -->
     <v-navigation-drawer
+      class="secondary"
       v-model="naviDrawer.isDrawer"
       flex
       app
@@ -14,10 +16,11 @@
           exact
         >
           <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon class="white--text">{{ item.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
+            <v-list-item-title class="white--text"
+            v-text="item.title" />
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -26,8 +29,10 @@
     <v-app-bar
       fixed
       app
+      class="secondary white--text"
     >
-      <v-app-bar-nav-icon 
+      <v-app-bar-nav-icon
+        class="white--text"
         @click.stop="naviDrawer.isDrawer = !naviDrawer.isDrawer"
       />
       <v-toolbar-title v-text="title" />
@@ -52,8 +57,8 @@ export default {
       naviDrawer: {
         isDrawer: false,
         items: [
-          { 
-            title: texts.list, 
+          {
+            title: texts.list,
             icon: 'fas fa-list',
             to: '/'
           },

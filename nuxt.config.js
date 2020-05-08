@@ -7,8 +7,8 @@ export default {
   ** Headers of the page
   */
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
-    title: process.env.npm_package_name || '',
+    titleTemplate: '%s | ' + 'めしてく',
+    title: 'めしてく',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -59,16 +59,28 @@ export default {
   vuetify: {
     customVariables: ['~/assets/scss/variables.scss'],
     theme: {
-      dark: true,
+      // デフォルトはダークモードでない
+      dark: false,
       themes: {
+        // ダークモードだとこっち
         dark: {
-          primary: colors.blue.darken2,
-          accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3
+          primary: '#ff9800',
+          secondary: '#ff5722',
+          accent: '#2196f3',
+          error: '#f44336',
+          warning: '#ffeb3b',
+          info: '#8bc34a',
+          success: '#4caf50'
+        },
+        // ダークモードでなければこっち
+        light: {
+          primary: '#ff9800',
+          secondary: '#ff5722',
+          accent: '#2196f3',
+          error: '#f44336',
+          warning: '#ffeb3b',
+          info: '#8bc34a',
+          success: '#4caf50'
         }
       }
     }

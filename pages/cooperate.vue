@@ -51,6 +51,11 @@ export default {
     components: {
         ComponentTitle
     },
+    head() {
+        return {
+            title: texts.title
+        }
+    },
     data() {
         return {
             texts,

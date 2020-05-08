@@ -113,6 +113,11 @@ export default {
         const shopData = await context.$axios.get(`shops/${id}`)
         return { shopData: shopData.data }
     },
+    head() {
+        return {
+            title: this.shopData.name
+        }
+    },
     components: {
         ComponentTitle
     },
@@ -123,7 +128,7 @@ export default {
             } catch(e) {
                 return ''
             }
-        } 
+        }
     }
 }
 </script>

@@ -47,11 +47,16 @@ import FullwideCard from '~/components/molecules/FullwideCard.vue'
 import ComponentTitle from '~/components/molecules/ComponentTitle.vue'
 
 export default {
+    head() {
+        return {
+            title: texts.title
+        }
+    },
     data() {
         return {
             texts
         }
-    }, 
+    },
     components: {
         FullwideCard,
         ComponentTitle,
