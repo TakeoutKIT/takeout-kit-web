@@ -84,6 +84,9 @@
             ></iframe>
         </v-row>
 
+        <p class="pl-2 pr-2 mt-10 mb-5">
+            このページの見方は<nuxt-link to="/shops/how-to-use">こちら</nuxt-link>
+        </p>
     </div>
 </template>
 
