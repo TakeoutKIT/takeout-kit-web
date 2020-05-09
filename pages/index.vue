@@ -62,7 +62,13 @@
                   </v-chip>
                 </div>
                 <div>
-                  
+                  <v-btn 
+                    :id="$style.link_button_color" 
+                    class="ma-3"
+                    :href="`/shops/${shop.id}`"
+                  >
+                    詳しくみる
+                  </v-btn>
                 </div>
               </v-flex>
             </v-layout>
@@ -160,3 +166,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" module>
+#link_button_color {
+  color: white;
+  background: $tamago-red;
+}
+</style>
