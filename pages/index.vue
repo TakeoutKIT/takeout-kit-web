@@ -63,6 +63,7 @@
                 </div>
               </v-flex>
             </v-layout>
+            <v-divider class="mt-5 mb-2"></v-divider>
           </div>
           <client-only>
             <infinite-loading
@@ -71,7 +72,7 @@
               @infinite="infiniteLoad"
             >
               <div slot="no-results"/>
-              <span slot="no-more">もうないよ〜</span>
+              <span slot="no-more">おしまい🥺</span>
             </infinite-loading>
           </client-only>
         </v-container>
@@ -89,28 +90,24 @@ export default {
     }
   },
   async asyncData(context) {
-    const shops = (await context.$axios.get('/shops')).data
-    return {
-      currentPage: shops.currentPage,
-      hitCount: shops.hitCount,
-      shops: shops.shops
+    try {
+      const shops = (await context.$axios.get('/shops?limit=20')).data
+      return {
+        currentPage: shops.currentPage,
+        hitCount: shops.hitCount,
+        shops: shops.shops
+      }
+    } catch(e) {
+      return {
+        currentPage: 0,
+        hitCount: 0,
+        shops: []
+      }
     }
   },
   data() {
     return {
       location: null,
-    }
-  },
-  async mounted() {
-    try {
-      let position = await this.getPosition()
-      position = position.coords
-      this.location = {
-        latitude: position.latitude,
-        longitude: position.longitude
-      }
-    } catch(e) {
-      this.location = null
     }
   },
   methods: {
@@ -119,8 +116,43 @@ export default {
         navigator.geolocation.getCurrentPosition(resolve, reject, options)
       })
     },
+    async setLocation() {
+      try {
+        let position = await this.getPosition()
+        position = position.coords
+        this.location = {
+          latitude: position.latitude,
+          longitude: position.longitude
+        }
+      } catch(e) {
+        this.location = null
+      }
+    },
     async infiniteLoad() {
+      this.currentPage ++
+      let requestUrl = this.getShopsRequestUrl({page: this.currentPage})
+      try {
+        let axRes = await this.$axios.get(requestUrl)
+        if (!!axRes.data) {
+          if (axRes.data.shops.length > 0) {
+            this.shops = this.shops.concat(axRes.data.shops)
+            this.$refs.infiniteLoading.stateChanger.loaded()
+            return 
+          } 
+        }
+      } catch(e) {
+        this.currentPage --
+      }
       this.$refs.infiniteLoading.stateChanger.complete()
+    },
+    getShopsRequestUrl({
+      page = 1,
+      sort = 2,
+      delivery = 0,
+      thirdDelivery = 0,
+      takeout = 0
+    }) {
+      return `/shops?page=${page}&sort=${sort}&delivery=${delivery}&thirdDelivery=${thirdDelivery}&takeout=${takeout}`
     }
   }
 }

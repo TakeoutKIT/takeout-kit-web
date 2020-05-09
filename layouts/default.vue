@@ -1,9 +1,12 @@
 <template>
-  <v-app>
+  <v-app
+    :id="$style.bg_color"
+  >
     <!-- 左メニュー -->
     <v-navigation-drawer
       class="secondary"
       v-model="naviDrawer.isDrawer"
+      :src="require('~/assets/images/adpDSC_7033.jpg')"
       flex
       app
     >
@@ -78,3 +81,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" module>
+#bg_color {
+  background: $tamago-white;
+}
+</style>
