@@ -63,7 +63,7 @@ async function getShops(
     })
   }
   // テイクアウト絞り込み
-  [filterDelivery,filterThirdDelivery,filterTakeout].forEach( (value,index) => {
+  [filterTakeout,filterDelivery,filterThirdDelivery].forEach( (value,index) => {
     if (value != 0) {
       shops = shops.filter(shop => shop[8+index] == 'TRUE')
     }
