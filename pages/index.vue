@@ -182,7 +182,7 @@ export default {
     },
     async searchText(event) {
       try {
-        const url = this.getShopsRequestUrl({ keyword: this.sortSetting.keyword })
+        const url = this.getShopsRequestUrl({ keyword: this.sortSetting.keyword.replace(' ',',') })
         const shops = (await this.$axios.get(url)).data
         this.shops = shops.shops
         this.currentPage = shops.currentPage
