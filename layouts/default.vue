@@ -1,9 +1,12 @@
 <template>
-  <v-app>
+  <v-app
+    :id="$style.bg_color"
+  >
     <!-- 左メニュー -->
     <v-navigation-drawer
       class="secondary"
       v-model="naviDrawer.isDrawer"
+      :src="require('~/assets/images/adpDSC_7033.jpg')"
       flex
       app
     >
@@ -19,8 +22,10 @@
             <v-icon class="white--text">{{ item.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="white--text"
-            v-text="item.title" />
+            <v-list-item-title 
+              class="white--text"
+              v-text="item.title" 
+            />
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -35,7 +40,9 @@
         class="white--text"
         @click.stop="naviDrawer.isDrawer = !naviDrawer.isDrawer"
       />
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title>
+        <nuxt-link to="/" :class="['white--text', $style.toolbar_title]"> {{ title }} </nuxt-link>
+      </v-toolbar-title>
       <v-spacer />
     </v-app-bar>
 
@@ -71,6 +78,11 @@ export default {
             title: texts.aboutus,
             icon: 'fas fa-question-circle',
             to: '/about-us'
+          },
+          {
+            title: texts.terms_of_uses,
+            icon: 'fas fa-pen-fancy',
+            to: '/terms-of-uses'
           }
         ]
       }
@@ -78,3 +90,12 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" module>
+#bg_color {
+  background: $tamago-white;
+}
+.toolbar_title {
+  text-decoration: none;
+}
+</style>

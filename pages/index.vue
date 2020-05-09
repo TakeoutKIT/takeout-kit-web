@@ -3,6 +3,34 @@
     <v-card
       class="mx-auto"
     >
+      <v-row justify="center">
+        <v-dialog v-model="isDialog" max-width="500px">
+          <v-card>
+            <v-card-title>ソート＆フィルタ</v-card-title>
+            <v-divider></v-divider>
+            <v-card-text>
+              <v-container fluid>
+                <v-checkbox 
+                  v-model="sortSetting.takeout" 
+                  label="テイクアウトありのみ表示"
+                  @change="searchCheck()"
+                ></v-checkbox>
+                <v-checkbox 
+                  v-model="sortSetting.delivery" 
+                  label="宅配サービスありのみ表示"
+                  @change="searchCheck()"
+                ></v-checkbox>
+                <v-checkbox 
+                  v-model="sortSetting.thirdDelivery" 
+                  label="外部宅配サービスありのみ表示"
+                  @change="searchCheck()"
+                ></v-checkbox>
+              </v-container>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
+      </v-row>
+      
       <v-toolbar>
 
         <v-toolbar-title>一覧</v-toolbar-title>
@@ -14,16 +42,21 @@
           prepend-icon="fas fa-search"
           single-line
           style="max-width:60%"
+          v-model='sortSetting.keyword'
+          @keydown.enter="searchText"
         ></v-text-field>
 
-        <v-btn icon>
+        <v-btn 
+          icon
+          @click="onDialog"
+        >
           <v-icon>fas fa-filter</v-icon>
         </v-btn>
 
       </v-toolbar>
         
       <v-card-text>
-        <v-container 
+        <v-container
           id="scroll-target"
           style="height: 75vh"
           class="overflow-y-auto ma-1"
@@ -61,8 +94,18 @@
                     {{ tag }}
                   </v-chip>
                 </div>
+                <div>
+                  <v-btn 
+                    :id="$style.link_button_color" 
+                    class="ma-3"
+                    :href="`/shops/${shop.id}`"
+                  >
+                    詳しくみる
+                  </v-btn>
+                </div>
               </v-flex>
             </v-layout>
+            <v-divider class="mt-5 mb-2"></v-divider>
           </div>
           <client-only>
             <infinite-loading
@@ -71,7 +114,7 @@
               @infinite="infiniteLoad"
             >
               <div slot="no-results"/>
-              <span slot="no-more">もうないよ〜</span>
+              <span slot="no-more">おしまい🥺</span>
             </infinite-loading>
           </client-only>
         </v-container>
@@ -89,16 +132,37 @@ export default {
     }
   },
   async asyncData(context) {
-    const shops = (await context.$axios.get('/shops')).data
-    return {
-      currentPage: shops.currentPage,
-      hitCount: shops.hitCount,
-      shops: shops.shops
+    try {
+      const [page, sort, delivery, thirdDelivery, takeout, keyword] = [1, 2, '', false, false, false]
+      const shops = (
+        await context.$axios.get(
+          `/shops?page=${page}&sort=${sort}&delivery=${delivery}&thirdDelivery=${thirdDelivery}&takeout=${takeout}&keyword=${keyword}`
+        )
+      ).data
+      return {
+        currentPage: shops.currentPage,
+        hitCount: shops.hitCount,
+        shops: shops.shops
+      }
+    } catch(e) {
+      return {
+        currentPage: 0,
+        hitCount: 0,
+        shops: []
+      }
     }
   },
   data() {
     return {
       location: null,
+      sortSetting: {
+        sort: 2,
+        keyword: '',
+        delivery: false,
+        thirdDelivery: false,
+        takeout: false
+      },
+      isDialog: false
     }
   },
   methods: {
@@ -120,8 +184,89 @@ export default {
       }
     },
     async infiniteLoad() {
+      this.currentPage ++
+      let requestUrl = this.getShopsRequestUrl({
+        page: this.currentPage,
+        sort: this.sortSetting.sort,
+        keyword: this.sortSetting.keyword.replace(' ',','),
+        delivery: this.sortSetting.delivery ,
+        thirdDelivery: this.sortSetting.thirdDelivery ,
+        takeout: this.sortSetting.takeout 
+      })
+      try {
+        let axRes = await this.$axios.get(requestUrl)
+        if (!!axRes.data) {
+          if (axRes.data.shops.length > 0) {
+            this.shops = this.shops.concat(axRes.data.shops)
+            this.$refs.infiniteLoading.stateChanger.loaded()
+            return 
+          } 
+        }
+      } catch(e) {
+        this.currentPage --
+      }
       this.$refs.infiniteLoading.stateChanger.complete()
+    },
+    getShopsRequestUrl({
+      page = 1,
+      sort = 2,
+      keyword = '',
+      delivery = false,
+      thirdDelivery = false,
+      takeout = false
+    }) {
+      return `/shops?page=${page}&sort=${sort}&delivery=${delivery}&thirdDelivery=${thirdDelivery}&takeout=${takeout}&keyword=${keyword}`
+    },
+    async searchText(event) {
+      try {
+        const url = this.getShopsRequestUrl({
+          sort: this.sortSetting.sort,
+          keyword: this.sortSetting.keyword.replace(' ',','),
+          delivery: this.sortSetting.delivery ,
+          thirdDelivery: this.sortSetting.thirdDelivery ,
+          takeout: this.sortSetting.takeout 
+        })
+        const shops = (await this.$axios.get(url)).data
+        this.shops = shops.shops
+        this.currentPage = shops.currentPage
+        this.hitCount = shops.hitCount
+      } catch(e) {
+        this.shops = []
+        this.currentPage = 0
+        this.hitCount = 0
+      }
+      event.target.blur()
+    },
+    onDialog() {
+      this.isDialog = !this.isDialog
+    },
+    async searchCheck() {
+        
+      try {
+        const url = this.getShopsRequestUrl({
+          sort: this.sortSetting.sort,
+          keyword: this.sortSetting.keyword.replace(' ',','),
+          delivery: this.sortSetting.delivery ,
+          thirdDelivery: this.sortSetting.thirdDelivery ,
+          takeout: this.sortSetting.takeout 
+        })
+        const shops = (await this.$axios.get(url)).data
+        this.shops = shops.shops
+        this.currentPage = shops.currentPage
+        this.hitCount = shops.hitCount
+      } catch(e) {
+        this.shops = []
+        this.currentPage = 0
+        this.hitCount = 0
+      }
     }
   }
 }
 </script>
+
+<style lang="scss" module>
+#link_button_color {
+  color: white;
+  background: $tamago-red;
+}
+</style>

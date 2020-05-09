@@ -75,9 +75,9 @@ export default {
         },
         // ダークモードでなければこっち
         light: {
-          primary: '#ff9800',
-          secondary: '#ff5722',
-          accent: '#2196f3',
+          primary: '#fcbe32',
+          secondary: '#fcbe32',
+          accent: '#88d8b0',
           error: '#f44336',
           warning: '#ffeb3b',
           info: '#8bc34a',
