@@ -64,7 +64,7 @@ async function getShops(
   }
   // テイクアウト絞り込み
   [filterTakeout,filterDelivery,filterThirdDelivery].forEach( (value,index) => {
-    if (value) {
+    if (value == 1) {
       shops = shops.filter(shop => shop[8+index] == 'TRUE')
     }
   })
@@ -179,9 +179,9 @@ router.post('/shops', async function (req, res, next) {
   // ソート方向 (0: 降順 1:昇順)
   const direction = isFinite(req.body.direction) ? parseInt(req.body.direction) : 1
   // 絞り込み (0:絞り込まない 1:絞り込む)
-  const filterDelivery = isBoolean(req.body.delivery) ? req.body.delivery : 0
-  const filterThirdDelivery = isBoolean(req.body.thirdDelivery) ? req.body.thirdDelivery : 0
-  const filterTakeout = isBoolean(req.body.takeout) ? req.body.takeout : 0
+  const filterDelivery = req.body.delivery === 'true' ? 1 : 0
+  const filterThirdDelivery = req.body.thirdDelivery === 'true' ? 1 : 0
+  const filterTakeout = req.body.takeout === 'true' ? 1 : 0
   const resp = await getShops(
     page,
     limit,
@@ -212,9 +212,9 @@ router.get('/shops', async function (req, res, next) {
   // ソート方向 (0: 降順 1:昇順)
   const direction = isFinite(req.query.direction) ? parseInt(req.query.direction) : 1
   // 絞り込み (0:絞り込まない 1:絞り込む)
-  const filterDelivery = isBoolean(req.query.delivery) ? req.query.delivery : 0
-  const filterThirdDelivery = isBoolean(req.query.thirdDelivery) ? req.query.thirdDelivery : 0
-  const filterTakeout = isBoolean(req.query.takeout) ? req.query.takeout : 0
+  const filterDelivery = req.query.delivery === 'true' ? 1 : 0
+  const filterThirdDelivery = req.query.thirdDelivery === 'true' ? 1 : 0
+  const filterTakeout = req.query.takeout === 'true' ? 1 : 0
   const resp = await getShops(
     page,
     limit,
