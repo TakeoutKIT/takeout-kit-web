@@ -23,7 +23,7 @@
       </v-toolbar>
         
       <v-card-text>
-        <v-container 
+        <v-container
           id="scroll-target"
           style="height: 75vh"
           class="overflow-y-auto ma-1"
@@ -60,6 +60,9 @@
                   >
                     {{ tag }}
                   </v-chip>
+                </div>
+                <div>
+                  
                 </div>
               </v-flex>
             </v-layout>
