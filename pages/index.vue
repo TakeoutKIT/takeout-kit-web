@@ -195,7 +195,6 @@ export default {
       })
       try {
         let axRes = await this.$axios.get(requestUrl)
-        console.log(requestUrl);
         if (!!axRes.data) {
           if (axRes.data.shops.length > 0) {
             this.shops = this.shops.concat(axRes.data.shops)
@@ -228,7 +227,6 @@ export default {
           takeout: this.sortSetting.takeout 
         })
         const shops = (await this.$axios.get(url)).data
-        console.log(url);
         this.shops = shops.shops
         this.currentPage = shops.currentPage
         this.hitCount = shops.hitCount
@@ -252,10 +250,7 @@ export default {
           thirdDelivery: this.sortSetting.thirdDelivery ,
           takeout: this.sortSetting.takeout 
         })
-        
         const shops = (await this.$axios.get(url)).data
-        console.log('searchCheck', url);
-        
         this.shops = shops.shops
         this.currentPage = shops.currentPage
         this.hitCount = shops.hitCount
