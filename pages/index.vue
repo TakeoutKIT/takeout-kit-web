@@ -14,6 +14,8 @@
           prepend-icon="fas fa-search"
           single-line
           style="max-width:60%"
+          v-model='sortSetting.keyword'
+          @keydown.enter="searchText"
         ></v-text-field>
 
         <v-btn icon>
@@ -117,6 +119,13 @@ export default {
   data() {
     return {
       location: null,
+      sortSetting: {
+        sort: 0,
+        keyword: '',
+        delivery: 0,
+        thirdDelivery: 0,
+        takeout: 0
+      }
     }
   },
   methods: {
@@ -139,7 +148,14 @@ export default {
     },
     async infiniteLoad() {
       this.currentPage ++
-      let requestUrl = this.getShopsRequestUrl({page: this.currentPage})
+      let requestUrl = this.getShopsRequestUrl({
+        page: this.currentPage,
+        sort: this.sortSetting.sort,
+        keyword: this.sortSetting.keyword,
+        delivery: this.sortSetting.delivery,
+        thirdDelivery: this.sortSetting.thirdDelivery,
+        takeout: this.sortSetting.takeout
+      })
       try {
         let axRes = await this.$axios.get(requestUrl)
         if (!!axRes.data) {
@@ -157,11 +173,26 @@ export default {
     getShopsRequestUrl({
       page = 1,
       sort = 2,
+      keyword = '',
       delivery = 0,
       thirdDelivery = 0,
       takeout = 0
     }) {
-      return `/shops?page=${page}&sort=${sort}&delivery=${delivery}&thirdDelivery=${thirdDelivery}&takeout=${takeout}`
+      return `/shops?page=${page}&sort=${sort}&delivery=${delivery}&thirdDelivery=${thirdDelivery}&takeout=${takeout}&keyword=${keyword}`
+    },
+    async searchText(event) {
+      try {
+        const url = this.getShopsRequestUrl({ keyword: this.sortSetting.keyword })
+        const shops = (await this.$axios.get(url)).data
+        this.shops = shops.shops
+        this.currentPage = shops.currentPage
+        this.hitCount = shops.hitCount
+      } catch(e) {
+        this.shops = []
+        this.currentPage = 0
+        this.hitCount = 0
+      }
+      event.target.blur()
     }
   }
 }
