@@ -74,6 +74,11 @@ export default {
             title: texts.aboutus,
             icon: 'fas fa-question-circle',
             to: '/about-us'
+          },
+          {
+            title: texts.terms_of_uses,
+            icon: 'fas fa-pen-fancy',
+            to: '/terms-of-uses'
           }
         ]
       }
