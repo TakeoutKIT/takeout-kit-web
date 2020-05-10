@@ -70,7 +70,7 @@
                 </v-list-item-content>
             </v-list-item>
             <v-card-actions >
-                <v-btn :href="shopData.orderUrl" class="mb-5" target="_blank">
+                <v-btn :href="shopData.orderUrl" class="mb-5" target="_blank" rel="noopener noreferrer">
                     注文サイトへ
                 </v-btn>
             </v-card-actions>
