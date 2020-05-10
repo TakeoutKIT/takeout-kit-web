@@ -7,6 +7,7 @@
                 :key="i"
                 class="ma-1"
                 label
+                @click.native.stop="tagClick"
             >
                 {{ tag }}
             </v-chip>
@@ -128,6 +129,14 @@ export default {
             } catch(e) {
                 return ''
             }
+        },
+        tagClick(event) {
+            this.$router.push({
+                path: '/',
+                query: {
+                    keyword: event.toElement.innerText
+                }
+            })
         }
     }
 }
