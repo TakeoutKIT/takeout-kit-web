@@ -29,6 +29,19 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <v-spacer />
+      <template v-slot:append>
+        <v-list>
+          <v-list-item href="https://twitter.com/intent/tweet?text=%E3%82%81%E3%81%97%E3%81%A6%E3%81%8F%0D%0Ahttps%3A%2F%2Ftakeout-kit-web.herokuapp.com%2F">
+            <v-list-item-action>
+              <v-icon class="white--text">fab fa-twitter</v-icon>
+            </v-list-item-action>
+            <v-list-item-title class="white--text">
+                ツイッターでシェア
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </template>
     </v-navigation-drawer>
 
     <v-app-bar
