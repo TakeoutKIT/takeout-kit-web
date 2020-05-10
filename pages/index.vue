@@ -96,6 +96,7 @@
                         :key="i"
                         :class="[$style.text_color, 'ma-1']"
                         label
+                        @click.native.stop="tagClick"
                     >
                       {{ tag }}
                     </v-chip>
@@ -164,6 +165,9 @@ export default {
       }
     },
     async infiniteLoad() {
+      if (!!this.$route.query.keyword) {
+        this.sortSetting.keyword = this.$route.query.keyword
+      }
       this.currentPage ++
       let requestUrl = this.getShopsRequestUrl({
         page: this.currentPage,
@@ -246,6 +250,11 @@ export default {
         this.currentPage = 0
         this.hitCount = 0
       }
+    },
+    async tagClick(event) {
+      this.sortSetting.keyword = event.toElement.innerText
+      await this.searchCheck()
+      return false
     }
   }
 }
