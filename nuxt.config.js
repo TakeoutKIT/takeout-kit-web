@@ -18,7 +18,7 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/icons/favicon.ico' }
     ]
   },
   /*
@@ -55,6 +55,7 @@ export default {
     '@nuxtjs/markdownit',
     '@nuxtjs/apollo',
     '@nuxtjs/axios',
+    '@nuxtjs/pwa'
   ],
   /*
   ** vuetify module configuration
@@ -119,5 +120,61 @@ export default {
     html: true,
     linkify: true,
     typography: true,
+  },
+  manifest: {
+    name: 'めしてく',
+    short_name: 'めしてく',
+    title: 'めしてく',
+    'og:title': 'めしてく',
+    description: '金沢工業大学周辺の飲食店を守りたいをコンセプトに飲食店のテイクアウトの情報を収集拡散するサービスです。',
+    'og:description': '金沢工業大学周辺の飲食店を守りたいをコンセプトに飲食店のテイクアウトの情報を収集拡散するサービスです。',
+    lang: 'ja',
+    theme_color: "#fcbe32",
+    background_color: '#e1eef6',
+    display: 'standalone',
+    scope: '/',
+    start_url: 'https://takeout-kit-web.herokuapp.com/',
+    icon: [
+      {
+        src: '/icons/icon-72x72.png',
+        size: '72x72',
+        type: 'image/png'
+      },
+      {
+        src: '/icons/icon-96x96.png',
+        size: '96x96',
+        type: 'image/png'
+      },
+      {
+        src: '/icons/icon-128x128.png',
+        size: '128x128',
+        type: 'image/png'
+      },
+      {
+        src: '/icons/icon-144x144.png',
+        size: '144x144',
+        type: 'image/png'
+      },
+      {
+        src: '/icons/icon-152x152.png',
+        size: '152x152',
+        type: 'image/png'
+      },
+      {
+        src: '/icons/icon-192x192.png',
+        size: '192x192',
+        type: 'image/png'
+      },
+      {
+        src: '/icons/icon-384x384.png',
+        size: '384x384',
+        type: 'image/png'
+      },
+      {
+        src: '/icons/icon-512x512.png',
+        size: '512x512',
+        type: 'image/png'
+      },
+    ]
   }
 }
