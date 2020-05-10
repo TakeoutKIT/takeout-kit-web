@@ -32,11 +32,12 @@
             </v-layout>
         </v-parallax>
 
-        <fullwide-card
-            :title="texts.aboutUsTitle"
-            :content="texts.aboutUsContent"
+        <fullwide-card-markdown
+            v-for="(about, i) in abouts"
+            :key="i"
+            :title="about.title"
+            :content="$md.render(about.content)"
         />
-
     </div>
 </template>
 
@@ -45,8 +46,16 @@ import texts from '~/assets/texts/about-us.json'
 
 import FullwideCard from '~/components/molecules/FullwideCard.vue'
 import ComponentTitle from '~/components/molecules/ComponentTitle.vue'
+import FullwideCardMarkdown from '~/components/molecules/FullwideCardMarkdown.vue'
+
+import allAbouts from '~/apollo/queries/allAbouts'
 
 export default {
+    apollo: {
+        abouts: {
+            query: allAbouts
+        }
+    },
     head() {
         return {
             title: texts.title
@@ -59,7 +68,7 @@ export default {
     },
     components: {
         FullwideCard,
-        ComponentTitle,
+        FullwideCardMarkdown
     }
 }
 </script>

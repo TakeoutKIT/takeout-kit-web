@@ -33,11 +33,12 @@
       
       <v-toolbar>
 
-        <v-toolbar-title>一覧</v-toolbar-title>
+        <v-toolbar-title :class="$style.text_color">一覧</v-toolbar-title>
 
         <v-spacer></v-spacer>
 
         <v-text-field
+          aria-label="タグ検索"
           hide-details
           prepend-icon="fas fa-search"
           single-line
@@ -49,6 +50,7 @@
         <v-btn 
           icon
           @click="onDialog"
+          aria-label="検索を絞り込む"
         >
           <v-icon>fas fa-filter</v-icon>
         </v-btn>
@@ -77,18 +79,21 @@
                   justify-center
                   align-center
                 >
-                  <h3 class="pt-10 display-1"> 
+                  <h3 
+                    :class="[$style.text_color, 'pt-10', 'display-1']"
+                    style="user-select: none;"
+                  > 
                     {{ shop.name }}
                   </h3>
                 </v-layout>
               </v-flex>
               <v-flex xs7>
-                <v-card-title> {{ shop.name }} </v-card-title>
+                <v-card-title :class="$style.text_color"> {{ shop.name }} </v-card-title>
                 <div class="ml-2">
                   <v-chip
                       v-for="(tag, i) in shop.tag"
                       :key="i"
-                      class="ma-1"
+                      :class="[$style.text_color, 'ma-1']"
                       label
                   >
                     {{ tag }}
@@ -96,8 +101,8 @@
                 </div>
                 <div>
                   <v-btn 
-                    :id="$style.link_button_color" 
-                    class="ma-3"
+                    :id="$style.link_button_color"
+                    :class="[$style.text_color, 'ma-3']"
                     :href="`/shops/${shop.id}`"
                   >
                     詳しくみる
@@ -114,7 +119,7 @@
               @infinite="infiniteLoad"
             >
               <div slot="no-results"/>
-              <span slot="no-more">おしまい🥺</span>
+              <span :class="$style.text_color" slot="no-more">おしまい🥺</span>
             </infinite-loading>
           </client-only>
         </v-container>
@@ -131,27 +136,6 @@ export default {
       titleTemplate: 'めしてく'
     }
   },
-  async asyncData(context) {
-    try {
-      const [page, sort, delivery, thirdDelivery, takeout, keyword] = [1, 2, '', false, false, false]
-      const shops = (
-        await context.$axios.get(
-          `/shops?page=${page}&sort=${sort}&delivery=${delivery}&thirdDelivery=${thirdDelivery}&takeout=${takeout}&keyword=${keyword}`
-        )
-      ).data
-      return {
-        currentPage: shops.currentPage,
-        hitCount: shops.hitCount,
-        shops: shops.shops
-      }
-    } catch(e) {
-      return {
-        currentPage: 0,
-        hitCount: 0,
-        shops: []
-      }
-    }
-  },
   data() {
     return {
       location: null,
@@ -162,7 +146,10 @@ export default {
         thirdDelivery: false,
         takeout: false
       },
-      isDialog: false
+      isDialog: false,
+      shops: [],
+      currentPage: 0,
+      hitCount: 0
     }
   },
   methods: {
@@ -205,7 +192,9 @@ export default {
       } catch(e) {
         this.currentPage --
       }
-      this.$refs.infiniteLoading.stateChanger.complete()
+      try {
+        this.$refs.infiniteLoading.stateChanger.complete()
+      } catch {}
     },
     getShopsRequestUrl({
       page = 1,
@@ -218,6 +207,9 @@ export default {
       return `/shops?page=${page}&sort=${sort}&delivery=${delivery}&thirdDelivery=${thirdDelivery}&takeout=${takeout}&keyword=${keyword}`
     },
     async searchText(event) {
+      this.shops = []
+      this.currentPage = 0
+      this.hitCount = 0
       try {
         const url = this.getShopsRequestUrl({
           sort: this.sortSetting.sort,
@@ -241,7 +233,9 @@ export default {
       this.isDialog = !this.isDialog
     },
     async searchCheck() {
-        
+      this.shops = []
+      this.currentPage = 0
+      this.hitCount = 0
       try {
         const url = this.getShopsRequestUrl({
           sort: this.sortSetting.sort,
@@ -266,7 +260,10 @@ export default {
 
 <style lang="scss" module>
 #link_button_color {
-  color: white;
-  background: $tamago-red;
+  color: $tomago-black;
+  background: $tamago-yellow;
+}
+.text_color {
+  color: $tomago-black;
 }
 </style>
