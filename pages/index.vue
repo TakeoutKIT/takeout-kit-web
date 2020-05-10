@@ -38,6 +38,7 @@
         <v-spacer></v-spacer>
 
         <v-text-field
+          aria-label="タグ検索"
           hide-details
           prepend-icon="fas fa-search"
           single-line
@@ -80,6 +81,7 @@
                 >
                   <h3 
                     :class="[$style.text_color, 'pt-10', 'display-1']"
+                    style="user-select: none;"
                   > 
                     {{ shop.name }}
                   </h3>
@@ -205,6 +207,9 @@ export default {
       return `/shops?page=${page}&sort=${sort}&delivery=${delivery}&thirdDelivery=${thirdDelivery}&takeout=${takeout}&keyword=${keyword}`
     },
     async searchText(event) {
+      this.shops = []
+      this.currentPage = 0
+      this.hitCount = 0
       try {
         const url = this.getShopsRequestUrl({
           sort: this.sortSetting.sort,
@@ -228,6 +233,9 @@ export default {
       this.isDialog = !this.isDialog
     },
     async searchCheck() {
+      this.shops = []
+      this.currentPage = 0
+      this.hitCount = 0
       try {
         const url = this.getShopsRequestUrl({
           sort: this.sortSetting.sort,
@@ -252,8 +260,8 @@ export default {
 
 <style lang="scss" module>
 #link_button_color {
-  color: white;
-  background: $tamago-red;
+  color: $tomago-black;
+  background: $tamago-yellow;
 }
 .text_color {
   color: $tomago-black;

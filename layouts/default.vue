@@ -43,6 +43,7 @@
       />
       <v-toolbar-title>
         <nuxt-link 
+          aria-label="トップページへ戻る"
           to="/"
           :class="['white--text', $style.toolbar_title, 'mt-1', 'mb-1']"
         > 
