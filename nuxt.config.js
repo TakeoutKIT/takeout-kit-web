@@ -21,15 +21,16 @@ export default {
       { name: 'description', content: '金沢工業大学周辺の飲食店を守りたいをコンセプトに飲食店のテイクアウトの情報を収集拡散するサービスです。' },
       { name: 'keywords', content: 'テイクアウト,金沢工業大学,お弁当' },
       { property: 'og:title', content: 'めしてく' },
+      { property: 'og:site_name', content: 'めしてく' },
       { property: 'og:type', content: 'website' },
-      { property: 'og:url', content: 'http://takeout-kit-web.herokuapp.com/' },
-      { property: 'og:image', content: '/thumbnail.png' },
+      { property: 'og:url', content: 'http://takeout-kit-web.herokuapp.com' },
+      { property: 'og:image', content: 'http://takeout-kit-web.herokuapp.com/thumbnail.png' },
       { name: 'twitter:card', content: 'summary' },
       { name: 'twitter:site', content: '@meshiteku' },
       { name: 'twitter:creator', content: '@zukky_rikugame' },
       { name: 'twitter:title', content: 'めしてく' },
       { name: 'twitter:description', content: '金沢工業大学周辺の飲食店を守りたいをコンセプトに飲食店のテイクアウトの情報を収集拡散するサービスです。' },
-      { name: 'twitter:image', content: '/twitter_thumbnail.png' }
+      { name: 'twitter:image', content: 'http://takeout-kit-web.herokuapp.com/twitter_thumbnail.png' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/icons/favicon.ico' },
@@ -139,57 +140,12 @@ export default {
   manifest: {
     name: 'めしてく',
     short_name: 'めしてく',
-    title: 'めしてく',
-    'og:title': 'めしてく',
     description: '金沢工業大学周辺の飲食店を守りたいをコンセプトに飲食店のテイクアウトの情報を収集拡散するサービスです。',
-    'og:description': '金沢工業大学周辺の飲食店を守りたいをコンセプトに飲食店のテイクアウトの情報を収集拡散するサービスです。',
     lang: 'ja',
     theme_color: "#fcbe32",
     background_color: '#e1eef6',
     display: 'standalone',
-    scope: '/',
-    start_url: '/',
-    icon: [
-      {
-        src: '/icons/icon-72x72.png',
-        size: '72x72',
-        type: 'image/png'
-      },
-      {
-        src: '/icons/icon-96x96.png',
-        size: '96x96',
-        type: 'image/png'
-      },
-      {
-        src: '/icons/icon-128x128.png',
-        size: '128x128',
-        type: 'image/png'
-      },
-      {
-        src: '/icons/icon-144x144.png',
-        size: '144x144',
-        type: 'image/png'
-      },
-      {
-        src: '/icons/icon-152x152.png',
-        size: '152x152',
-        type: 'image/png'
-      },
-      {
-        src: '/icons/icon-192x192.png',
-        size: '192x192',
-        type: 'image/png'
-      },
-      {
-        src: '/icons/icon-384x384.png',
-        size: '384x384',
-        type: 'image/png'
-      },
-      {
-        src: '/icons/icon-512x512.png',
-        size: '512x512',
-        type: 'image/png'
-      },
-    ]
+    scope: 'https://takeout-kit-web.herokuapp.com',
+    start_url: 'https://takeout-kit-web.herokuapp.com'
   }
 }
