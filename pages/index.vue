@@ -33,7 +33,7 @@
       
       <v-toolbar>
 
-        <v-toolbar-title>一覧</v-toolbar-title>
+        <v-toolbar-title :class="$style.text_color">一覧</v-toolbar-title>
 
         <v-spacer></v-spacer>
 
@@ -49,6 +49,7 @@
         <v-btn 
           icon
           @click="onDialog"
+          aria-label="検索を絞り込む"
         >
           <v-icon>fas fa-filter</v-icon>
         </v-btn>
@@ -77,18 +78,20 @@
                   justify-center
                   align-center
                 >
-                  <h3 class="pt-10 display-1"> 
+                  <h3 
+                    :class="[$style.text_color, 'pt-10', 'display-1']"
+                  > 
                     {{ shop.name }}
                   </h3>
                 </v-layout>
               </v-flex>
               <v-flex xs7>
-                <v-card-title> {{ shop.name }} </v-card-title>
+                <v-card-title :class="$style.text_color"> {{ shop.name }} </v-card-title>
                 <div class="ml-2">
                   <v-chip
                       v-for="(tag, i) in shop.tag"
                       :key="i"
-                      class="ma-1"
+                      :class="[$style.text_color, 'ma-1']"
                       label
                   >
                     {{ tag }}
@@ -96,8 +99,8 @@
                 </div>
                 <div>
                   <v-btn 
-                    :id="$style.link_button_color" 
-                    class="ma-3"
+                    :id="$style.link_button_color"
+                    :class="[$style.text_color, 'ma-3']"
                     :href="`/shops/${shop.id}`"
                   >
                     詳しくみる
@@ -114,7 +117,7 @@
               @infinite="infiniteLoad"
             >
               <div slot="no-results"/>
-              <span slot="no-more">おしまい🥺</span>
+              <span :class="$style.text_color" slot="no-more">おしまい🥺</span>
             </infinite-loading>
           </client-only>
         </v-container>
@@ -187,7 +190,9 @@ export default {
       } catch(e) {
         this.currentPage --
       }
-      this.$refs.infiniteLoading.stateChanger.complete()
+      try {
+        this.$refs.infiniteLoading.stateChanger.complete()
+      } catch {}
     },
     getShopsRequestUrl({
       page = 1,
@@ -223,7 +228,6 @@ export default {
       this.isDialog = !this.isDialog
     },
     async searchCheck() {
-        
       try {
         const url = this.getShopsRequestUrl({
           sort: this.sortSetting.sort,
@@ -250,5 +254,8 @@ export default {
 #link_button_color {
   color: white;
   background: $tamago-red;
+}
+.text_color {
+  color: $tomago-black;
 }
 </style>

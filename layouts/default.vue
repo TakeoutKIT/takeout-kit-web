@@ -38,6 +38,7 @@
     >
       <v-app-bar-nav-icon
         class="white--text"
+        aria-label="ナビバーを表示"
         @click.stop="naviDrawer.isDrawer = !naviDrawer.isDrawer"
       />
       <v-toolbar-title>
