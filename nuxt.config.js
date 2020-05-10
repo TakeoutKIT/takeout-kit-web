@@ -15,10 +15,25 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
+      { name: 'apple-mobile-web-app-capable', content: 'yes' },
+      { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
+      { name: 'description', content: '金沢工業大学周辺の飲食店を守りたいをコンセプトに飲食店のテイクアウトの情報を収集拡散するサービスです。' },
+      { name: 'keywords', content: 'テイクアウト,金沢工業大学,お弁当' },
+      { property: 'og:title', content: 'めしてく' },
+      { property: 'og:type', content: 'website' },
+      { property: 'og:url', content: 'http://takeout-kit-web.herokuapp.com/' },
+      { property: 'og:image', content: '/thumbnail.png' },
+      { name: 'twitter:card', content: 'summary' },
+      { name: 'twitter:site', content: '@meshiteku' },
+      { name: 'twitter:creator', content: '@zukky_rikugame' },
+      { name: 'twitter:title', content: 'めしてく' },
+      { name: 'twitter:description', content: '金沢工業大学周辺の飲食店を守りたいをコンセプトに飲食店のテイクアウトの情報を収集拡散するサービスです。' },
+      { name: 'twitter:image', content: '/twitter_thumbnail.png' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/icons/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/icons/favicon.ico' },
+      { rel: 'apple-touch-icon', size: '192x192', href: '/icons/icon-192x192.png' },
     ]
   },
   /*
@@ -133,7 +148,7 @@ export default {
     background_color: '#e1eef6',
     display: 'standalone',
     scope: '/',
-    start_url: 'https://takeout-kit-web.herokuapp.com/',
+    start_url: '/',
     icon: [
       {
         src: '/icons/icon-72x72.png',
