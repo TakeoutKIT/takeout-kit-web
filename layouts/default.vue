@@ -41,7 +41,16 @@
         @click.stop="naviDrawer.isDrawer = !naviDrawer.isDrawer"
       />
       <v-toolbar-title>
-        <nuxt-link to="/" :class="['white--text', $style.toolbar_title]"> {{ title }} </nuxt-link>
+        <nuxt-link 
+          to="/"
+          :class="['white--text', $style.toolbar_title, 'mt-1', 'mb-1']"
+        > 
+          <v-img 
+            :src="require('~/assets/images/meshiteku_rogo.png')" 
+            max-width="200px"
+          >
+          </v-img>
+        </nuxt-link>
       </v-toolbar-title>
       <v-spacer />
     </v-app-bar>

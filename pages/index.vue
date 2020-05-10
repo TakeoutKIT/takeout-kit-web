@@ -131,27 +131,6 @@ export default {
       titleTemplate: 'めしてく'
     }
   },
-  async asyncData(context) {
-    try {
-      const [page, sort, delivery, thirdDelivery, takeout, keyword] = [1, 2, false, false, false, '']
-      const shops = (
-        await context.$axios.get(
-          `/shops?page=${page}&sort=${sort}&delivery=${delivery}&thirdDelivery=${thirdDelivery}&takeout=${takeout}&keyword=${keyword}`
-        )
-      ).data
-      return {
-        currentPage: shops.currentPage,
-        hitCount: shops.hitCount,
-        shops: shops.shops
-      }
-    } catch(e) {
-      return {
-        currentPage: 0,
-        hitCount: 0,
-        shops: []
-      }
-    }
-  },
   data() {
     return {
       location: null,
@@ -162,7 +141,10 @@ export default {
         thirdDelivery: false,
         takeout: false
       },
-      isDialog: false
+      isDialog: false,
+      shops: [],
+      currentPage: 0,
+      hitCount: 0
     }
   },
   methods: {
