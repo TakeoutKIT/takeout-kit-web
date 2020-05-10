@@ -133,7 +133,7 @@ export default {
   },
   async asyncData(context) {
     try {
-      const [page, sort, delivery, thirdDelivery, takeout, keyword] = [1, 2, '', false, false, false]
+      const [page, sort, delivery, thirdDelivery, takeout, keyword] = [1, 2, false, false, false, '']
       const shops = (
         await context.$axios.get(
           `/shops?page=${page}&sort=${sort}&delivery=${delivery}&thirdDelivery=${thirdDelivery}&takeout=${takeout}&keyword=${keyword}`
