@@ -64,52 +64,46 @@
           class="overflow-y-auto ma-1"
         >
           <div v-for="(shop, i) in shops" :key="i" class="pb-4">
-            <v-layout>
-              <v-flex xs5>
-                <v-img
-                  v-if="!!shop.imageUrl"
-                  :src="shop.imageUrl"
-                  :lazy-src="require('~/assets/images/loading.gif')"
-                  height="125px"
-                  contain
-                ></v-img>
-                <v-layout
-                  v-else
-                  column
-                  justify-center
-                  align-center
-                >
-                  <h3 
-                    :class="[$style.text_color, 'pt-10', 'display-1']"
-                    style="user-select: none;"
-                  > 
-                    {{ shop.name }}
-                  </h3>
-                </v-layout>
-              </v-flex>
-              <v-flex xs7>
-                <v-card-title :class="$style.text_color"> {{ shop.name }} </v-card-title>
-                <div class="ml-2">
-                  <v-chip
-                      v-for="(tag, i) in shop.tag"
-                      :key="i"
-                      :class="[$style.text_color, 'ma-1']"
-                      label
+            <nuxt-link :to="`/shops/${shop.id}`" tag="div">
+              <v-layout>
+                <v-flex xs5>
+                  <v-img
+                    v-if="!!shop.imageUrl"
+                    :src="shop.imageUrl"
+                    :lazy-src="require('~/assets/images/loading.gif')"
+                    height="125px"
+                    contain
+                  ></v-img>
+                  <v-layout
+                    v-else
+                    column
+                    justify-center
+                    align-center
                   >
-                    {{ tag }}
-                  </v-chip>
-                </div>
-                <div>
-                  <v-btn 
-                    :id="$style.link_button_color"
-                    :class="[$style.text_color, 'ma-3']"
-                    :href="`/shops/${shop.id}`"
-                  >
-                    詳しくみる
-                  </v-btn>
-                </div>
-              </v-flex>
-            </v-layout>
+                    <h3 
+                      :class="[$style.text_color, 'pt-10', 'display-1']"
+                      style="user-select: none;"
+                    > 
+                      {{ shop.name }}
+                    </h3>
+                  </v-layout>
+                </v-flex>
+                <v-flex xs7>
+                  <v-card-title :class="$style.text_color"> {{ shop.name }} </v-card-title>
+                  <div class="ml-2">
+                    <v-chip
+                        v-for="(tag, i) in shop.tag"
+                        :key="i"
+                        :class="[$style.text_color, 'ma-1']"
+                        label
+                        @click.native.stop="tagClick"
+                    >
+                      {{ tag }}
+                    </v-chip>
+                  </div>
+                </v-flex>
+              </v-layout>
+            </nuxt-link>  
             <v-divider class="mt-5 mb-2"></v-divider>
           </div>
           <client-only>
@@ -171,6 +165,9 @@ export default {
       }
     },
     async infiniteLoad() {
+      if (!!this.$route.query.keyword) {
+        this.sortSetting.keyword = this.$route.query.keyword
+      }
       this.currentPage ++
       let requestUrl = this.getShopsRequestUrl({
         page: this.currentPage,
@@ -253,6 +250,11 @@ export default {
         this.currentPage = 0
         this.hitCount = 0
       }
+    },
+    async tagClick(event) {
+      this.sortSetting.keyword = event.toElement.innerText
+      await this.searchCheck()
+      return false
     }
   }
 }
