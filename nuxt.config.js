@@ -23,14 +23,14 @@ export default {
       { property: 'og:title', content: 'めしてく' },
       { property: 'og:site_name', content: 'めしてく' },
       { property: 'og:type', content: 'website' },
-      { property: 'og:url', content: 'http://takeout-kit-web.herokuapp.com' },
-      { property: 'og:image', content: 'http://takeout-kit-web.herokuapp.com/thumbnail.png' },
+      { property: 'og:url', content: 'https://takeout-kit-web.herokuapp.com' },
+      { property: 'og:image', content: 'https://takeout-kit-web.herokuapp.com/thumbnail.png' },
       { name: 'twitter:card', content: 'summary' },
       { name: 'twitter:site', content: '@meshiteku' },
       { name: 'twitter:creator', content: '@zukky_rikugame' },
       { name: 'twitter:title', content: 'めしてく' },
       { name: 'twitter:description', content: '金沢工業大学周辺の飲食店を守りたいをコンセプトに飲食店のテイクアウトの情報を収集拡散するサービスです。' },
-      { name: 'twitter:image', content: 'http://takeout-kit-web.herokuapp.com/twitter_thumbnail.png' }
+      { name: 'twitter:image', content: 'https://takeout-kit-web.herokuapp.com/twitter_thumbnail.png' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/icons/favicon.ico' },
