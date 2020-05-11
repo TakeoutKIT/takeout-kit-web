@@ -32,6 +32,14 @@
       <v-spacer />
       <template v-slot:append>
         <v-list>
+          <v-list-item href="https://github.com/TakeoutKIT/takeout-kit-web">
+            <v-list-item-action>
+              <v-icon class="white--text">fab fa-github</v-icon>
+            </v-list-item-action>
+            <v-list-item-title class="white--text">
+                Fork me on Github
+            </v-list-item-title>
+          </v-list-item>
           <v-list-item href="https://twitter.com/intent/tweet?text=%E3%82%81%E3%81%97%E3%81%A6%E3%81%8F%0D%0Ahttps%3A%2F%2Ftakeout-kit-web.herokuapp.com%2F">
             <v-list-item-action>
               <v-icon class="white--text">fab fa-twitter</v-icon>
