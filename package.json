@@ -24,6 +24,7 @@
     "googleapis": "^49.0.0",
     "graphql": "^15.0.0",
     "nuxt": "^2.0.0",
+    "redirect-ssl": "^1.4.1",
     "vue-infinite-loading": "^2.4.5"
   },
   "devDependencies": {
