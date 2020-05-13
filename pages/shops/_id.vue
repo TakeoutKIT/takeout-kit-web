@@ -59,7 +59,9 @@
 
         <v-card v-if="!!shopNews" class="pl-5 pr-5 pt-3 mt-10 ms-2">
             <v-card-text>
-                <p v-html="$md.render(shopNews.news)"></p>
+                <div id="md-container">
+                    <div v-html="$md.render(shopNews.news)"></div>
+                </div>
             </v-card-text>
         </v-card>
 
@@ -141,6 +143,12 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+#md-container ::v-deep img {
+    max-width: 100%;
+}
+</style>
 
 <style lang="scss" module>
 .embed_frame {

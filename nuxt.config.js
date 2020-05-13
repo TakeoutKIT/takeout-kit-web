@@ -118,7 +118,8 @@ export default {
   },
   serverMiddleware: [
     // API middleware
-    '~/api/index.js'
+    '~/api/index.js',
+    'redirect-ssl',
   ],
   axios: {
     baseURL: process.env.NODE_ENV !== 'production' ? 'http://localhost:3000/api/' : 'http://localhost:' + process.env.PORT + '/api/',
