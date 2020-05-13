@@ -59,7 +59,7 @@
 
         <v-card v-if="!!shopNews" class="pl-5 pr-5 pt-3 mt-10 ms-2">
             <v-card-text>
-                <div id="md-contaner">
+                <div id="md-container">
                     <div v-html="$md.render(shopNews.news)"></div>
                 </div>
             </v-card-text>
@@ -145,7 +145,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#md-contaner ::v-deep img {
+#md-container ::v-deep img {
     max-width: 100%;
 }
 </style>
